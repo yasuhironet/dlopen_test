@@ -6,11 +6,14 @@ LDFLAGS = -ldl
 
 all: $(app) $(lib)
 
+.c.o:
+	$(CC) -c $<
+
 clean:
 	rm -f $(app) $(lib)
 
-$(app): $(app).c
-	$(CC) -fPIC $(CFLAGS) $(LDFLAGS) -o $@ $<
+$(app): $(app).o data.o
+	$(CC) -fPIC $(CFLAGS) $(LDFLAGS) -o $@ $< data.o
 
 lib%.so: %.c
 	$(CC) -shared -fPIC $(CFLAGS) -o $@ $<

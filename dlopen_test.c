@@ -10,6 +10,8 @@ solibs[] =
   "./libbgp2.so",
 };
 
+extern char proto_data[];
+
 int
 main (int argc, char **argv)
 {
@@ -17,6 +19,7 @@ main (int argc, char **argv)
   int ret;
   void *dlhandle;
   void (*func)(void);
+  void (*proto_func)(void *);
 
   int index;
   char *current_solib;
@@ -41,12 +44,27 @@ main (int argc, char **argv)
 
       func = (void (*)(void)) dlsym (dlhandle, "print_version");
       if (! func)
-        {
-          fprintf (stderr, "dlsym(): error: %s\n", dlerror ());
-          continue;
-        }
+        fprintf (stderr, "dlsym(): error: %s\n", dlerror ());
+      else
+        func ();
 
-      func ();
+      proto_func = (void (*)(void *)) dlsym (dlhandle, "proto_init");
+      if (! proto_func)
+        fprintf (stderr, "dlsym(): error: %s\n", dlerror ());
+      else
+        proto_func (proto_data);
+
+      proto_func = (void (*)(void *)) dlsym (dlhandle, "proto_change");
+      if (! proto_func)
+        fprintf (stderr, "dlsym(): error: %s\n", dlerror ());
+      else
+        proto_func (proto_data);
+
+      proto_func = (void (*)(void *)) dlsym (dlhandle, "proto_show");
+      if (! proto_func)
+        fprintf (stderr, "dlsym(): error: %s\n", dlerror ());
+      else
+        proto_func (proto_data);
 
       index++;
       index %= solibs_size;

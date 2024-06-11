@@ -1,4 +1,5 @@
 
-dlopen_test
+*.o
 lib*.so
+dlopen_test
 
