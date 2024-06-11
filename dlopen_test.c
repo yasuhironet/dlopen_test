@@ -8,6 +8,7 @@ solibs[] =
 {
   "./libbgp1.so",
   "./libbgp2.so",
+  "./libbgp3.so",
 };
 
 extern char proto_data[];

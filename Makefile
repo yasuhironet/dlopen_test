@@ -1,5 +1,5 @@
 app = dlopen_test
-lib = libbgp1.so libbgp2.so
+lib = libbgp1.so libbgp2.so libbgp3.so
 
 CFLAGS = -Wall # -ansi -pedantic
 LDFLAGS = -ldl
